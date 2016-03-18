@@ -4,14 +4,30 @@ import {connect} from 'react-redux'
 
 class HeaderPreview extends Component {
   static propTypes = {
-    number: PropTypes.string
-  };
+    invoice: PropTypes.shape({
+      number: PropTypes.string,
+      'client-name': PropTypes.string,
+      'project-name': PropTypes.string,
+      purpose: PropTypes.string,
+      date: PropTypes.string,
+      'amount-received': PropTypes.string,
+      balance: PropTypes.string,
+      'local-international': PropTypes.string
+    }).isRequired
+  }
+
+  mapObject (object, callback) {
+    return Object.keys(object).map(function (key) {
+      return callback(key, object[key])
+    })
+  }
+
   render () {
+    const invoice = this.props.invoice
     return (
       <div>
-        <div>
-          Invoice # : {this.props.number}
-        </div>
+      Allo papa!
+      {invoice.number}
       </div>
     )
   }
@@ -19,7 +35,7 @@ class HeaderPreview extends Component {
 
 function mapStateToProps (state) {
   return {
-    number: state.invoice
+    invoice: state.invoice
   }
 }
 

@@ -8,16 +8,25 @@ import { actions } from '../redux/modules/invoice'
 class FormHeader extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired
-  };
+  }
 
   constructor (props) {
     super(props)
-
     this.onChange = this.onChange.bind(this)
+    this.onLoad = this.onLoad.bind(this)
+
+    window.onload = this.onLoad
+  }
+
+  onLoad () {
+    var inputs = document.querySelectorAll('.pricing-input, .header-input')
+    for (var i = 0; i < inputs.length; i++) {
+      this.props.fieldChange({[inputs[i].name]: inputs[i].value})
+    }
   }
 
   onChange (event) {
-    this.props.fieldChange(event.target.value)
+    this.props.fieldChange({[event.target.name]: event.target.value})
   }
 
   render () {
@@ -26,26 +35,52 @@ class FormHeader extends Component {
         <div>
           Invoice #:
           <input
+            className='header-input'
             type='text'
-            name='invoice-number'
+            name='number'
             onChange={this.onChange}>
           </input>
         </div>
         <div>
+        </div>
+        <div>
           Date:
-          <input type='date' name='date'></input>
+          <input
+            className='header-input'
+            type='date'
+            name='date'
+            defaultValue={(new Date().getFullYear()) + '-' +
+            (new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1) + '-' +
+            (new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate())}
+            onChange={this.onChange}>
+          </input>
         </div>
         <div>
           Client name:
-          <input type='text' name='client-name'></input>
+          <input
+            className='header-input'
+            type='text'
+            name='client-name'
+            onChange={this.onChange}>
+          </input>
         </div>
         <div>
           Project Name:
-          <input type='text' name='project-name'></input>
+          <input
+            className='header-input'
+            type='text'
+            name='project-name'
+            onChange={this.onChange}>
+          </input>
         </div>
         <div>
           Purpose:
-          <input type='text' name='purpose'></input>
+          <input
+            className='header-input'
+            type='text'
+            name='purpose'
+            onChange={this.onChange}>
+          </input>
         </div>
       </div>
     )

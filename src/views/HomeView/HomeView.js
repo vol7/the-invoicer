@@ -1,6 +1,8 @@
 import React from 'react'
 
 import FormHeader from '../../components/form-header'
+import FormPricing from '../../components/form-pricing'
+import FormItemList from '../../components/form-item-list'
 import HeaderPreview from '../../containers/preview-header'
 
 // We avoid using the `@connect` decorator on the class definition so
@@ -11,19 +13,25 @@ export default class HomeView extends React.Component<void, Props, void> {
     return (
       <div className='container'>
         <div>
-        -----------------------------
+        ##############################
         </div>
         <form>
           <FormHeader />
+          //////////////////////////////////////////////////
+          <FormItemList />
+          //////////////////////////////////////////////////
+          <FormPricing />
         </form>
         <div>
-        -----------------------------
+        ##############################
         </div>
         <div>
           <HeaderPreview />
         </div>
+        <div>
+        ##############################
+        </div>
       </div>
-
     )
   }
 }

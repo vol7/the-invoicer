@@ -21,13 +21,14 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [FIELD_CHANGE]: (state, action) => action.payload
+  [FIELD_CHANGE]: (state, action) => ({...state, ...action.payload})
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = ''
+const initialState = {
+}
 
 export default function invoiceReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
