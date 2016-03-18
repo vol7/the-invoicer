@@ -23,6 +23,7 @@ export default class FormItem extends Component {
   changeItem (event) {
     event.preventDefault()
     let item = {}
+    // Je sais, c'est pas très jolie...
     switch (event.target.name) {
       case 'description':
         item = {

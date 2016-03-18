@@ -28,7 +28,7 @@ class FormPricing extends Component {
           <input
             className='pricing-input'
             type='text'
-            name='amount-received'
+            name='amountReceived'
             onChange={this.onChange}>
           </input>
         </div>
@@ -46,7 +46,7 @@ class FormPricing extends Component {
           <input
             className='pricing-input'
             type='text'
-            name='local-international'
+            name='localInternational'
             onChange={this.onChange}>
           </input>
         </div>

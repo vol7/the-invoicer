@@ -61,7 +61,7 @@ class FormHeader extends Component {
           <input
             className='header-input'
             type='text'
-            name='client-name'
+            name='clientName'
             onChange={this.onChange}>
           </input>
         </div>
@@ -70,7 +70,7 @@ class FormHeader extends Component {
           <input
             className='header-input'
             type='text'
-            name='project-name'
+            name='projectName'
             onChange={this.onChange}>
           </input>
         </div>
