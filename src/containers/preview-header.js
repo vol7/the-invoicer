@@ -13,21 +13,25 @@ class HeaderPreview extends Component {
       'amount-received': PropTypes.string,
       balance: PropTypes.string,
       'local-international': PropTypes.string
-    }).isRequired
-  }
-
-  mapObject (object, callback) {
-    return Object.keys(object).map(function (key) {
-      return callback(key, object[key])
     })
   }
 
   render () {
     const invoice = this.props.invoice
+
+    const total = function () {
+      if (invoice.items && invoice.items.length) {
+        return invoice.items.map((item) => (parseInt(item.price)) || 0).reduce((a, b) => a + b)
+      } else {
+        return 0
+      }
+    }
+
     return (
       <div>
-      Allo papa!
-      {invoice.number}
+        Total: {total()}$
+        <div></div>
+        Invoice #: {invoice.number}
       </div>
     )
   }

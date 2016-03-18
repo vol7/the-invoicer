@@ -1,26 +1,43 @@
 import React from 'react'
 import { PropTypes } from 'react'
 import { Component } from 'react'
-// import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-
-// import { actions } from '../redux/modules/invoice'
 
 export default class FormItem extends Component {
   static propTypes = {
     removeItem: PropTypes.func.isRequired,
-    index: PropTypes.number.isRequired
+    changeItem: PropTypes.func.isRequired,
+    index: PropTypes.number.isRequired,
+    item: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
 
-    this.state = {removeItem: this.props.removeItem.bind(this, event, this.props.index)}
+    this.state = {
+      removeItem: this.props.removeItem.bind(this, event, this.props.index)
+    }
+
     this.changeItem = this.changeItem.bind(this)
   }
 
-  changeItem (event, item) {
+  changeItem (event) {
     event.preventDefault()
+    let item = {}
+    switch (event.target.name) {
+      case 'description':
+        item = {
+          [event.target.name]: event.target.value,
+          'price': this.props.item.price
+        }
+        break
+      case 'price':
+        item = {
+          description: this.props.item.description,
+          [event.target.name]: event.target.value
+        }
+        break
+    }
+    this.props.changeItem(item, this.props.index)
   }
 
   render () {
@@ -31,6 +48,7 @@ export default class FormItem extends Component {
           <input
             type='text'
             name='description'
+            value={this.props.item.description}
             onChange={this.changeItem}>
           </input>
         </div>
@@ -39,8 +57,9 @@ export default class FormItem extends Component {
         <div>
           Prix:
           <input
-            type='text'
+            type='number'
             name='price'
+            value={this.props.item.price}
             onChange={this.changeItem}>
           </input>
         </div>

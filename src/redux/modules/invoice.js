@@ -28,6 +28,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
+
 }
 
 export default function invoiceReducer (state = initialState, action) {

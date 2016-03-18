@@ -12,6 +12,7 @@ class FormHeader extends Component {
 
   constructor (props) {
     super(props)
+
     this.onChange = this.onChange.bind(this)
     this.onLoad = this.onLoad.bind(this)
 
@@ -19,7 +20,7 @@ class FormHeader extends Component {
   }
 
   onLoad () {
-    var inputs = document.querySelectorAll('.pricing-input, .header-input')
+    const inputs = document.querySelectorAll('.pricing-input, .header-input')
     for (var i = 0; i < inputs.length; i++) {
       this.props.fieldChange({[inputs[i].name]: inputs[i].value})
     }
@@ -36,7 +37,7 @@ class FormHeader extends Component {
           Invoice #:
           <input
             className='header-input'
-            type='text'
+            type='number'
             name='number'
             onChange={this.onChange}>
           </input>
