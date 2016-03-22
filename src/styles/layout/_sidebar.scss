@@ -1,0 +1,36 @@
+// Sidebar
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: $sidebar-width;
+  height: 100%;
+  background-color: $grey-dark;
+  padding: 2em;
+  overflow-y: scroll;
+
+  @media print {
+    display: none;
+  }
+}
+
+.sidebar__title {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    margin-right: 0.35em;
+  }
+}
+
+.sidebar__title,
+.sidebar__item {
+  color: $white;
+}
+
+.sidebar hr {
+  border-color: darken($grey, 15%);
+  margin-bottom: 1em;
+  margin-top: 1.5em;
+}

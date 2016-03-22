@@ -8,6 +8,10 @@ import FormItem from './form-item'
 
 import { actions } from '../redux/modules/invoice'
 
+const initialState = {
+  items: []
+}
+
 class FormItemList extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired
@@ -16,14 +20,15 @@ class FormItemList extends Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      items: []
-    }
+    this.state = initialState
+
+    this.applyChanges(initialState)
 
     this.addItem = this.addItem.bind(this)
     this.removeItem = this.removeItem.bind(this)
     this.changeItem = this.changeItem.bind(this)
     this.applyChanges = this.applyChanges.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   changeItem (item, index) {
@@ -62,6 +67,10 @@ class FormItemList extends Component {
     this.setState(newState)
   }
 
+  reset () {
+    this.applyChanges(initialState)
+  }
+
   render () {
     return (
       <div>
@@ -74,7 +83,8 @@ class FormItemList extends Component {
             changeItem={this.changeItem}
           />
         )}
-        <input type='button' onClick={this.addItem} value='Add new Item (+)'/>
+        <button onClick={this.addItem} className='btn btn--ghost'>+ Add item</button>
+        <hr/>
       </div>
     )
   }

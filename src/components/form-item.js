@@ -2,6 +2,8 @@ import React from 'react'
 import { PropTypes } from 'react'
 import { Component } from 'react'
 
+import update from 'react-addons-update'
+
 export default class FormItem extends Component {
   static propTypes = {
     removeItem: PropTypes.func.isRequired,
@@ -22,56 +24,54 @@ export default class FormItem extends Component {
 
   changeItem (event) {
     event.preventDefault()
-    let item = {}
-    // Je sais, c'est pas très jolie...
-    switch (event.target.name) {
-      case 'description':
-        item = {
-          [event.target.name]: event.target.value,
-          'price': this.props.item.price
-        }
-        break
-      case 'price':
-        item = {
-          description: this.props.item.description,
-          [event.target.name]: event.target.value
-        }
-        break
-    }
+    let item = update(this.props.item, {
+      [event.target.name]: { $set: event.target.value }
+    })
     this.props.changeItem(item, this.props.index)
   }
 
   render () {
     return (
       <div>
-        <div>
-          Description:
+        <div className='grid'>
+          <div className='grid__col--10'>
+            <h3 className='sidebar__item'>Item</h3>
+          </div>
+          <div className='grid__col--2 text-right'>
+            <button className='delete-icon' type='button' onClick={this.state.removeItem}>×</button>
+          </div>
+        </div>
+        <div className='grid'>
+          <div className='grid__col--8'>
+            <div className='field'>
+              <label className='field__label'>Name</label>
+              <input type='text' className='field__input'/>
+            </div>
+          </div>
+          <div className='grid__col--4'>
+            <div className='field'>
+              <label className='field__label'>Price</label>
+              <input
+                className='field__input'
+                type='number'
+                name='price'
+                value={this.props.item.price}
+                onChange={this.changeItem}>
+              </input>
+            </div>
+          </div>
+        </div>
+        <div className='field'>
+          <label className='field__label'>Description (optional)</label>
           <input
+            className='field__input'
             type='text'
             name='description'
             value={this.props.item.description}
             onChange={this.changeItem}>
           </input>
         </div>
-        <div>
-        </div>
-        <div>
-          Prix:
-          <input
-            type='number'
-            name='price'
-            value={this.props.item.price}
-            onChange={this.changeItem}>
-          </input>
-        </div>
-        <input
-          type='button'
-          onClick={this.state.removeItem}
-          value='Remove item (-)'>
-        </input>
-        <div>
-        --------------------------------------------------
-        </div>
+        <hr/>
       </div>
     )
   }

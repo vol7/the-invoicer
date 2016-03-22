@@ -25,7 +25,7 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_css_modules     : true,
+  compiler_css_modules     : false,
   compiler_devtool         : 'source-map',
   compiler_hash_type       : 'hash',
   compiler_fail_on_warning : false,
@@ -78,7 +78,9 @@ config.globals = {
   '__TEST__'     : config.env === 'test',
   '__DEBUG__'    : config.env === 'development' && !argv.no_debug,
   '__DEBUG_NEW_WINDOW__' : !!argv.nw,
-  '__BASENAME__' : JSON.stringify(process.env.BASENAME || '')
+  '__BASENAME__' : JSON.stringify(process.env.BASENAME || ''),
+  'TPS' : 0.05,
+  'TVQ' : 0.09975
 }
 
 // ------------------------------------

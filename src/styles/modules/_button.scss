@@ -1,0 +1,21 @@
+// Button
+
+.btn {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  border-radius: $border-radius;
+}
+
+.btn--ghost {
+  color: $white;
+}
+
+.btn--primary {
+  width: 100%;
+  padding: 0.85em;
+  text-align: center;
+  color: $grey-dark;
+  background-color: $white;
+}

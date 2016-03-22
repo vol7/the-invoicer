@@ -1,0 +1,26 @@
+// Form
+
+.field {
+  margin-bottom: 1em;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: $grey-light;
+}
+
+.field__input {
+  padding: 0.75em;
+  border-radius: $border-radius;
+  border: 0;
+  width: 100%;
+  outline: 0;
+  background-color: rgba($black, 0.25);
+  color: $white;
+  transition: background-color $time $curve;
+
+  &:focus {
+    background-color: rgba($black, 0.35);
+  }
+}
