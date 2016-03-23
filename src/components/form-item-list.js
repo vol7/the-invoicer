@@ -12,6 +12,12 @@ const initialState = {
   items: []
 }
 
+const emptyItem = {
+  description: '',
+  price: null,
+  name: ''
+}
+
 class FormItemList extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired
@@ -22,7 +28,7 @@ class FormItemList extends Component {
 
     this.state = initialState
 
-    this.applyChanges(initialState)
+    this.props.fieldChange(initialState)
 
     this.addItem = this.addItem.bind(this)
     this.removeItem = this.removeItem.bind(this)
@@ -45,7 +51,7 @@ class FormItemList extends Component {
 
     const newState = update(this.state, {
       items: {
-        $push: [{description: '', price: ''}]
+        $push: [emptyItem]
       }
     })
     this.applyChanges(newState)

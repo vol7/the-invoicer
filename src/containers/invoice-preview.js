@@ -5,9 +5,20 @@ import { connect } from 'react-redux'
 import logo from '../../images/logo.svg'
 import logoMuted from '../../images/logo-muted.svg'
 
-import 'styles/core.scss'
+import Money from '../components/money'
 
-class HeaderPreview extends Component {
+const contactInformation = {
+  name: 'Volume7 Inc.',
+  adress: '94 Champlain, Montreal, QC H8Y 3S5',
+  email: 'hello@volume7.io',
+  website: 'volume7.io',
+  institution: '003',
+  transit: '07671',
+  accountUSD: '4002648',
+  accountCAD: '1009620'
+}
+
+class InvoicePreview extends Component {
   static propTypes = {
     invoice: PropTypes.shape({
       number: PropTypes.string,
@@ -32,26 +43,33 @@ class HeaderPreview extends Component {
 
     const subTotal = function () {
       if (invoice.items && invoice.items.length) {
-        return (invoice.items.map((item) => (parseInt(item.price)) || 0).reduce((a, b) => a + b)).toFixed(2)
+        return (invoice.items.map((item) => (parseFloat(item.price)) || 0).reduce((a, b) => a + b))
       } else {
-        return (0).toFixed(2)
+        return 0
       }
     }
 
     const total = function () {
-      return (subTotal() * (1 + TVQ + TPS)).toFixed(2)
+      const taxes = invoice.location === 'Local' ? (1 + TVQ + TPS) : 1
+      return subTotal() * taxes - invoice.amountReceived
     }
 
     const tvq = function () {
-      return (subTotal() * (TVQ)).toFixed(2)
+      return subTotal() * TVQ
     }
 
     const tps = function () {
-      return (subTotal() * (TPS)).toFixed(2)
+      return subTotal() * TPS
     }
 
-    const taxes = function () {
-      return (subTotal() * (TPS + TVQ)).toFixed(2)
+    let taxes = ''
+    if (invoice.location === 'Local') {
+      taxes = (
+        <div className='grid__col--3'>
+          <h4>TPS | TVQ</h4>
+          <strong><Money amount={tps()}/> | <Money amount={tvq()}/></strong>
+        </div>
+      )
     }
 
     let amountReceived = ''
@@ -59,7 +77,7 @@ class HeaderPreview extends Component {
       amountReceived = (
         <div className='grid__col--3'>
           <h4>Paid</h4>
-          <strong>{parseInt(invoice.amountReceived).toFixed(2)}$</strong>
+          <strong><Money amount={invoice.amountReceived}/></strong>
         </div>
       )
     }
@@ -69,8 +87,8 @@ class HeaderPreview extends Component {
         <header className='header'>
           <div className='grid grid--middle'>
             <div className='grid__col--3'><img src={logo} style={{width: '46px'}}/></div>
-            <div className='grid__col--3'><strong>Volume7 Inc.</strong></div>
-            <div className='grid__col--6 text-right'><strong>94 Champlain, Montreal, QC H8Y 3S5</strong></div>
+            <div className='grid__col--3'><strong>{contactInformation.name}</strong></div>
+            <div className='grid__col--6 text-right'><strong>{contactInformation.adress}</strong></div>
           </div>
         </header>
         <section className='section'>
@@ -105,36 +123,32 @@ class HeaderPreview extends Component {
           return (
             <div className='grid item'>
               <div className='grid__col--8'>
-                <strong>Item</strong>
-                <p>{invoice.items[key].description}</p>
+                <strong>{invoice.items[key].name || 'Item'}</strong>
+                <p>{invoice.items[key].description || 'Description'}</p>
               </div>
               <div className='grid__col--4 text-right'>
-                <strong>{parseInt(invoice.items[key].price).toFixed(2) || '0.00'} $</strong>
+                <strong><Money amount={invoice.items[key].price}/></strong>
               </div>
             </div>
             )
         })}
         </section>
-
         <hr/>
 
         <section className='section'>
           <div className='grid grid--middle'>
             <div className='grid__col--3'>
               <h4>Subtotal</h4>
-              <strong>{subTotal()}$</strong>
+              <strong><Money amount={subTotal()}/></strong>
             </div>
 
-            <div className='grid__col--3'>
-              <h4>Taxes</h4>
-              <strong>{taxes()}$</strong>
-            </div>
+            {taxes}
 
             {amountReceived}
 
             <div className='grid__col--3 text-right'>
               <h4>Balance Due</h4>
-              <strong className='text-accent'>{parseInt(invoice.balance).toFixed(2)}$</strong>
+              <strong className='text-accent'><Money amount={invoice.balance || total()}/></strong>
             </div>
           </div>
         </section>
@@ -147,7 +161,7 @@ class HeaderPreview extends Component {
           </p>
           <p>
             If you have any questions, feel free to contact us at
-            <a href='mailto:hello@volume7.io'> hello@volume7.io </a>
+            <a href='mailto:hello@volume7.io'> {contactInformation.email} </a>
           </p>
           <p>
             Sincerely, <br/> The Volume7 team
@@ -160,16 +174,16 @@ class HeaderPreview extends Component {
           <div className='grid grid--middle'>
             <div className='grid__col--3'>
               <p>
-                <a href='mailto:hello@volume7.io'>hello@volume7.io</a>
+                <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
                 <br/>
-                <a href='http://volume7.io'>volume7.io</a>
+                <a href='http://volume7.io'>{contactInformation.website}</a>
               </p>
             </div>
             <div className='grid__col--3'>
-              <p>Institution: 003<br/>Transit: 07671</p>
+              <p>Institution: {contactInformation.institution}<br/>Transit: {contactInformation.transit}</p>
             </div>
             <div className='grid__col--4'>
-              <p>Account (USD) : 4002648<br/>Account (CAD) : 1009620</p>
+              <p>Account (USD) : {contactInformation.accountUSD}<br/>Account (CAD) : {contactInformation.accountCAD}</p>
             </div>
             <div className='grid__col--2 text-right'>
               <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}}/></a>
@@ -181,17 +195,6 @@ class HeaderPreview extends Component {
     )
   }
 }
-/*
-SubTotal: {subTotal()} $
-Tps: {tps()} $
-Tvq: {tvq()} $
-Taxes: {taxes()} $
-Total: {total()} $
-Purpose: {invoice.purpose}
-{invoice.amountReceived ? 'Amount received: ' + invoice.amountReceived : ''}
-{invoice.balance ? 'Balance: ' + invoice.balance : ''}
-Local or International: {invoice.localInternational}
-*/
 
 function mapStateToProps (state) {
   return {
@@ -199,4 +202,4 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(HeaderPreview)
+export default connect(mapStateToProps)(InvoicePreview)

@@ -10,22 +10,17 @@ import { actions } from '../redux/modules/invoice'
 
 import invoicerLogo from '../../images/invoicer-logo.svg'
 
-// import classes from 'styles/core.scss'
-
-const today = (new Date().getFullYear()) + '-' +
-      (new Date().getMonth() + 1 < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1) + '-' +
-      (new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate())
+const options = { year: 'numeric', month: 'long', day: 'numeric' }
+const today = new Date().toLocaleDateString('en-US', options)
 
 const initialState = {
-  // set initial state (if any) here
   date: today,
   number: '',
   clientName: '',
   projectName: '',
-  purpose: '',
   amountReceived: '',
   balance: '',
-  localInternational: ''
+  location: 'Local'
 }
 
 class InvoiceForm extends Component {
@@ -75,7 +70,7 @@ class InvoiceForm extends Component {
         <aside className='sidebar'>
           <h1 className='sidebar__title'>
             <img className='icon' src={invoicerLogo}/>
-            <span>Ze Invoicer ©</span>
+            <span><i>Ze Invoicer</i> ©</span>
           </h1>
           <div className='grid'>
             <div className='grid__col--4'>
@@ -95,7 +90,7 @@ class InvoiceForm extends Component {
                 <label className='field__label'>Date</label>
                 <input
                   className='field__input'
-                  type='date'
+                  type='string'
                   name='date'
                   value={this.state.date}
                   onChange={this.onChange}>
@@ -131,7 +126,7 @@ class InvoiceForm extends Component {
             <label className='field__label'>Paid</label>
             <input
               className='field__input'
-              type='text'
+              type='number'
               name='amountReceived'
               value={this.state.amountReceived}
               onChange={this.onChange}>
@@ -141,9 +136,28 @@ class InvoiceForm extends Component {
             <label className='field__label'>Balance Due</label>
             <input
               className='field__input'
-              type='text'
+              type='number'
               name='balance'
               value={this.state.balance}
+              onChange={this.onChange}>
+            </input>
+          </div>
+          <div className='field'>
+            <label className='field__label'>Location</label>
+            <input
+              className='field__input'
+              type='radio'
+              name='location'
+              value='Local'
+              checked={this.state.location === 'Local' ? 'checked' : ''}
+              onChange={this.onChange}>
+            </input>
+            <input
+              className='field__input'
+              type='radio'
+              name='location'
+              value='International'
+              checked={this.state.location === 'International' ? 'checked' : ''}
               onChange={this.onChange}>
             </input>
           </div>
@@ -153,18 +167,6 @@ class InvoiceForm extends Component {
     )
   }
 }
-
-/*
-<div>
-            Local / International:
-            <input
-              type='text'
-              name='localInternational'
-              value={this.state.localInternational}
-              onChange={this.onChange}>
-            </input>
-          </div>
-*/
 
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)

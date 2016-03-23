@@ -35,7 +35,7 @@ export default class FormItem extends Component {
       <div>
         <div className='grid'>
           <div className='grid__col--10'>
-            <h3 className='sidebar__item'>Item</h3>
+            <h3 className='sidebar__item'>{this.props.item.name || 'Item'}</h3>
           </div>
           <div className='grid__col--2 text-right'>
             <button className='delete-icon' type='button' onClick={this.state.removeItem}>×</button>
@@ -45,7 +45,13 @@ export default class FormItem extends Component {
           <div className='grid__col--8'>
             <div className='field'>
               <label className='field__label'>Name</label>
-              <input type='text' className='field__input'/>
+              <input
+                className='field__input'
+                type='text'
+                name='name'
+                value={this.props.item.name}
+                onChange={this.changeItem}>
+              </input>
             </div>
           </div>
           <div className='grid__col--4'>
