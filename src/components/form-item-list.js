@@ -8,10 +8,6 @@ import FormItem from './form-item'
 
 import { actions } from '../redux/modules/invoice'
 
-const initialState = {
-  items: []
-}
-
 const emptyItem = {
   description: '',
   price: null,

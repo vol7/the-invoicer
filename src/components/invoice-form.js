@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import FormItemList from './form-item-list'
+import FormInput from './form-input'
 
 import { actions } from '../redux/modules/invoice'
 
@@ -44,75 +45,50 @@ class InvoiceForm extends Component {
           </h1>
           <div className='grid'>
             <div className='grid__col--4'>
-              <div className='field'>
-                <label className='field__label'>No.</label>
-                <input
-                  className='field__input'
-                  type='number'
-                  name='number'
-                  value={this.props.invoice.number}
-                  onChange={this.onChange}>
-                </input>
-              </div>
+              <FormInput
+                type='number'
+                name='number'
+                value={this.props.invoice.number}
+                label='No.'
+              />
             </div>
             <div className='grid__col--8'>
-              <div className='field'>
-                <label className='field__label'>Date</label>
-                <input
-                  className='field__input'
-                  type='string'
-                  name='date'
-                  value={this.props.invoice.date}
-                  onChange={this.onChange}>
-                </input>
-              </div>
+              <FormInput
+                type='text'
+                name='date'
+                value={this.props.invoice.date}
+                label='Date'
+              />
             </div>
           </div>
-          <div className='field'>
-            <label className='field__label'>Client</label>
-            <input
-              className='field__input'
-              type='text'
-              name='clientName'
-              value={this.props.invoice.clientName}
-              onChange={this.onChange}>
-            </input>
-          </div>
-          <div className='field'>
-            <label className='field__label'>Project</label>
-            <input
-              className='field__input'
-              type='text'
-              name='projectName'
-              value={this.props.invoice.projectName}
-              onChange={this.onChange}>
-            </input>
-          </div>
+          <FormInput
+            type='text'
+            name='clientName'
+            value={this.props.invoice.clientName}
+            label='Client'
+          />
+          <FormInput
+            type='text'
+            name='projectName'
+            value={this.props.invoice.projectName}
+            label='Project'
+          />
           <hr/>
 
           <FormItemList />
 
-          <div className='field'>
-            <label className='field__label'>Paid</label>
-            <input
-              className='field__input'
-              type='number'
-              name='amountReceived'
-              value={this.props.invoice.amountReceived}
-              onChange={this.onChange}
-            />
-          </div>
-          <div className='field'>
-            <label className='field__label'>Balance Due</label>
-            <input
-              className='field__input'
-              type='number'
-              name='balance'
-              value={this.props.invoice.balance}
-              onChange={this.onChange}>
-            </input>
-
-          </div>
+          <FormInput
+            type='number'
+            name='amountReceived'
+            value={this.props.invoice.amountReceived}
+            label='Paid'
+          />
+          <FormInput
+            type='number'
+            name='balance'
+            value={this.props.invoice.balance}
+            label='Balance Due'
+          />
           <div className='field'>
             <label className='field__label'>Location</label>
             <input

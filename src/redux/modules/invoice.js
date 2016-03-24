@@ -38,9 +38,9 @@ export const initialState = {
   balance: '',
   location: 'Local',
   items: [{
-      description: '',
-      price: null,
-      name: ''
+    description: '',
+    price: null,
+    name: ''
   }]
 }
 
