@@ -24,7 +24,7 @@ export default class FormItem extends Component {
 
   changeItem (event) {
     event.preventDefault()
-    let item = update(this.props.item, {
+    const item = update(this.props.item, {
       [event.target.name]: { $set: event.target.value }
     })
     this.props.changeItem(item, this.props.index)

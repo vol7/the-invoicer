@@ -40,20 +40,14 @@ class InvoiceForm extends Component {
     window.onload = this.onLoad
   }
 
-  mapObject (object, callback) {
-    return Object.keys(object).map(function (key) {
-      return callback(key, object[key])
-    })
-  }
-
   onLoad () {
-    this.mapObject(this.state, function (key, value) {
-      this.props.fieldChange({[key]: value})
+    Object.keys(this.state).map(function (key) {
+      this.props.fieldChange({[key]: this.state[key]})
     }.bind(this))
   }
 
   onChange (event) {
-    let newState = update(this.state, {
+    const newState = update(this.state, {
       [event.target.name]: { $set: event.target.value }
     })
     this.setState(newState)
@@ -129,8 +123,8 @@ class InvoiceForm extends Component {
               type='number'
               name='amountReceived'
               value={this.state.amountReceived}
-              onChange={this.onChange}>
-            </input>
+              onChange={this.onChange}
+            />            
           </div>
           <div className='field'>
             <label className='field__label'>Balance Due</label>
@@ -141,6 +135,7 @@ class InvoiceForm extends Component {
               value={this.state.balance}
               onChange={this.onChange}>
             </input>
+            
           </div>
           <div className='field'>
             <label className='field__label'>Location</label>

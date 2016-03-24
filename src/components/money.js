@@ -16,9 +16,8 @@ export default class Money extends Component {
     let sign = ''
     if (amount < 0) {
       sign = '-'
-      amount *= -1
+      amount = Math.abs(amount).toFixed(2)
     }
-
     // Splits amount into two part, the units (leftPart) and the decimals (rightPart)
     // We keep the rightPart untouched to concatenate at the end and
     // split the left into an array of single digits 1234 => [1],[2],[3],[4]
