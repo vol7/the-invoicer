@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import update from 'react-addons-update'
 
 import FormItemList from './form-item-list'
 
@@ -10,52 +9,29 @@ import { actions } from '../redux/modules/invoice'
 
 import invoicerLogo from '../../images/invoicer-logo.svg'
 
-const options = { year: 'numeric', month: 'long', day: 'numeric' }
-const today = new Date().toLocaleDateString('en-US', options)
-
-const initialState = {
-  date: today,
-  number: '',
-  clientName: '',
-  projectName: '',
-  amountReceived: '',
-  balance: '',
-  location: 'Local'
-}
+import { initialState } from '../redux/modules/invoice'
 
 class InvoiceForm extends Component {
   static propTypes = {
-    fieldChange: PropTypes.func.isRequired
+    fieldChange: PropTypes.func.isRequired,
+    invoice: PropTypes.object
   }
 
   constructor (props) {
     super(props)
 
-    this.state = initialState
-
     this.onChange = this.onChange.bind(this)
-    this.onLoad = this.onLoad.bind(this)
     this.reset = this.reset.bind(this)
-
-    window.onload = this.onLoad
-  }
-
-  onLoad () {
-    Object.keys(this.state).map(function (key) {
-      this.props.fieldChange({[key]: this.state[key]})
-    }.bind(this))
   }
 
   onChange (event) {
-    const newState = update(this.state, {
-      [event.target.name]: { $set: event.target.value }
-    })
-    this.setState(newState)
     this.props.fieldChange({[event.target.name]: event.target.value})
   }
 
   reset () {
-    this.setState(initialState, this.onLoad)
+    Object.keys(initialState).map(function (key) {
+      this.props.fieldChange({[key]: initialState[key]})
+    }.bind(this))
   }
 
   render () {
@@ -74,7 +50,7 @@ class InvoiceForm extends Component {
                   className='field__input'
                   type='number'
                   name='number'
-                  value={this.state.number}
+                  value={this.props.invoice.number}
                   onChange={this.onChange}>
                 </input>
               </div>
@@ -86,7 +62,7 @@ class InvoiceForm extends Component {
                   className='field__input'
                   type='string'
                   name='date'
-                  value={this.state.date}
+                  value={this.props.invoice.date}
                   onChange={this.onChange}>
                 </input>
               </div>
@@ -98,7 +74,7 @@ class InvoiceForm extends Component {
               className='field__input'
               type='text'
               name='clientName'
-              value={this.state.clientName}
+              value={this.props.invoice.clientName}
               onChange={this.onChange}>
             </input>
           </div>
@@ -108,7 +84,7 @@ class InvoiceForm extends Component {
               className='field__input'
               type='text'
               name='projectName'
-              value={this.state.projectName}
+              value={this.props.invoice.projectName}
               onChange={this.onChange}>
             </input>
           </div>
@@ -122,9 +98,9 @@ class InvoiceForm extends Component {
               className='field__input'
               type='number'
               name='amountReceived'
-              value={this.state.amountReceived}
+              value={this.props.invoice.amountReceived}
               onChange={this.onChange}
-            />            
+            />
           </div>
           <div className='field'>
             <label className='field__label'>Balance Due</label>
@@ -132,10 +108,10 @@ class InvoiceForm extends Component {
               className='field__input'
               type='number'
               name='balance'
-              value={this.state.balance}
+              value={this.props.invoice.balance}
               onChange={this.onChange}>
             </input>
-            
+
           </div>
           <div className='field'>
             <label className='field__label'>Location</label>
@@ -144,7 +120,7 @@ class InvoiceForm extends Component {
               type='radio'
               name='location'
               value='Local'
-              checked={this.state.location === 'Local' ? 'checked' : ''}
+              checked={this.props.invoice.location === 'Local' ? 'checked' : ''}
               onChange={this.onChange}>
             </input>
             <input
@@ -152,7 +128,7 @@ class InvoiceForm extends Component {
               type='radio'
               name='location'
               value='International'
-              checked={this.state.location === 'International' ? 'checked' : ''}
+              checked={this.props.invoice.location === 'International' ? 'checked' : ''}
               onChange={this.onChange}>
             </input>
           </div>
@@ -163,8 +139,14 @@ class InvoiceForm extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    invoice: state.invoice
+  }
+}
+
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(InvoiceForm)
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceForm)

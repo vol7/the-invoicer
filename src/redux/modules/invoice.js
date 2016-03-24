@@ -27,8 +27,21 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {
-
+const options = { year: 'numeric', month: 'long', day: 'numeric' }
+const today = new Date().toLocaleDateString('en-US', options)
+export const initialState = {
+  date: today,
+  number: '',
+  clientName: '',
+  projectName: '',
+  amountReceived: '',
+  balance: '',
+  location: 'Local',
+  items: [{
+      description: '',
+      price: null,
+      name: ''
+  }]
 }
 
 export default function invoiceReducer (state = initialState, action) {

@@ -11,13 +11,13 @@ export default class Money extends Component {
     // If empty use 0 as default
     let amount = (parseFloat(value) || 0).toFixed(2)
 
-    // Asign '-' for minus and '' for plus to sign
-    // and if amount is negative asigns the absolute value of itself to amount
+    // Ignore the negative and simply add it at the end
     let sign = ''
     if (amount < 0) {
       sign = '-'
       amount = Math.abs(amount).toFixed(2)
     }
+
     // Splits amount into two part, the units (leftPart) and the decimals (rightPart)
     // We keep the rightPart untouched to concatenate at the end and
     // split the left into an array of single digits 1234 => [1],[2],[3],[4]

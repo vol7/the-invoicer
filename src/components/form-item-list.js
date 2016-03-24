@@ -20,67 +20,51 @@ const emptyItem = {
 
 class FormItemList extends Component {
   static propTypes = {
-    fieldChange: PropTypes.func.isRequired
+    fieldChange: PropTypes.func.isRequired,
+    invoice: PropTypes.object
   }
 
   constructor (props) {
     super(props)
 
-    this.state = initialState
-
-    this.props.fieldChange(initialState)
-
     this.addItem = this.addItem.bind(this)
     this.removeItem = this.removeItem.bind(this)
     this.changeItem = this.changeItem.bind(this)
-    this.applyChanges = this.applyChanges.bind(this)
-    this.reset = this.reset.bind(this)
   }
 
   changeItem (item, index) {
-    const newState = update(this.state, {
+    const newState = update(this.props.invoice, {
       items: {
         $splice: [[[index], 1, item]]
       }
     })
-    this.applyChanges(newState)
+    this.props.fieldChange(newState)
   }
 
   addItem (event) {
     event.preventDefault()
 
-    const newState = update(this.state, {
+    const newState = update(this.props.invoice, {
       items: {
         $push: [emptyItem]
       }
     })
-    this.applyChanges(newState)
+    this.props.fieldChange(newState)
   }
 
   removeItem (event, index) {
-    event.preventDefault()
-
-    const newState = update(this.state, {
+    const newState = update(this.props.invoice, {
       items: {
         $splice: [[[index], 1]]
       }
     })
-    this.applyChanges(newState)
-  }
-
-  applyChanges (newState) {
     this.props.fieldChange(newState)
-    this.setState(newState)
-  }
-
-  reset () {
-    this.applyChanges(initialState)
   }
 
   render () {
     return (
       <div>
-        {this.state.items.map((item, i) =>
+        {this.props.invoice.items.map((item, i) =>
           <FormItem
             item={item}
             key={i}
@@ -96,8 +80,14 @@ class FormItemList extends Component {
   }
 }
 
+function mapStateToProps (state) {
+  return {
+    invoice: state.invoice
+  }
+}
+
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(FormItemList)
+export default connect(mapStateToProps, mapDispatchToProps)(FormItemList)

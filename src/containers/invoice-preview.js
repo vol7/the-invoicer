@@ -28,7 +28,7 @@ class InvoicePreview extends Component {
       date: PropTypes.string,
       amountReceived: PropTypes.string,
       balance: PropTypes.string,
-      localInternational: PropTypes.string
+      location: PropTypes.string
     })
   }
 
@@ -79,6 +79,17 @@ class InvoicePreview extends Component {
           <h4>Paid</h4>
           <strong><Money amount={invoice.amountReceived}/></strong>
         </div>
+      )
+    }
+
+    let account = ''
+    if (invoice.location === 'Local') {
+      account = (
+        <p>Account : {contactInformation.accountCAD}</p>
+      )
+    } else if (invoice.location === 'International') {
+      account = (
+        <p>Account : {contactInformation.accountUSD}</p>
       )
     }
 
@@ -183,7 +194,7 @@ class InvoicePreview extends Component {
               <p>Institution: {contactInformation.institution}<br/>Transit: {contactInformation.transit}</p>
             </div>
             <div className='grid__col--4'>
-              <p>Account (USD) : {contactInformation.accountUSD}<br/>Account (CAD) : {contactInformation.accountCAD}</p>
+              {account}
             </div>
             <div className='grid__col--2 text-right'>
               <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}}/></a>
