@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'react'
 import { Component } from 'react'
+import drag from '../../images/drag.svg'
 
 import update from 'react-addons-update'
 
@@ -35,7 +36,10 @@ export default class FormItem extends Component {
       <div>
         <div className='grid'>
           <div className='grid__col--10'>
-            <h3 className='sidebar__item'>{this.props.item.name || 'Item'}</h3>
+            <h3 className='sidebar__item'>
+              <img className='icon icon--small' src={drag}/>
+              <span>{this.props.item.name || 'Item'}</span>
+            </h3>
           </div>
           <div className='grid__col--2 text-right'>
             <button className='delete-icon' type='button' onClick={this.state.removeItem}>×</button>

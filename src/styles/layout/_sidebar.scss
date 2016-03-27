@@ -18,15 +18,20 @@
 .sidebar__title {
   display: flex;
   align-items: center;
-
-  .icon {
-    margin-right: 0.35em;
-  }
 }
 
 .sidebar__title,
 .sidebar__item {
   color: $white;
+
+  .icon {
+    margin-right: 0.5em;
+  }
+}
+
+.sidebar__item {
+  display: flex;
+  align-items: center;
 }
 
 .sidebar hr {

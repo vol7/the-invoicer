@@ -1,3 +1,10 @@
+// Hide spinner
+
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+
 // Form
 
 .field {
@@ -11,7 +18,7 @@
 }
 
 .field__input {
-  padding: 0.75em;
+  padding: 0.75em 1em;
   border-radius: $border-radius;
   border: 0;
   width: 100%;
@@ -23,4 +30,68 @@
   &:focus {
     background-color: rgba($black, 0.35);
   }
+}
+
+
+// Control
+
+.control {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.control__input {
+  display: none;
+}
+
+.control__indicator {
+  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  background-color: rgba($black, 0.25);
+  transition: background-color $time $curve;
+
+  .control__input:checked + & {
+    background-color: rgba($black, 0.35);
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transition: transform $time $curve, opacity $time $curve;
+
+    .control__input:checked + & {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}
+
+.control__indicator--checkbox {
+  border-radius: $border-radius / 2;
+
+  &:after {
+    margin-left: -10px;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    background-image: url('../../images/checkmark.svg');
+    background-size: 20px;
+    background-position: center center;
+    transform: scale(0.3);
+  }
+}
+
+.control__label {
+  color: $white;
+  font-size: 14px;
+  margin-left: 0.5em;
 }

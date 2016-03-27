@@ -82,16 +82,9 @@ class InvoicePreview extends Component {
       )
     }
 
-    let account = ''
-    if (invoice.location === 'Local') {
-      account = (
-        <p>Account : {contactInformation.accountCAD}</p>
-      )
-    } else if (invoice.location === 'International') {
-      account = (
-        <p>Account : {contactInformation.accountUSD}</p>
-      )
-    }
+    const account = (
+      <p>Account: {invoice.location === 'Local' ? contactInformation.accountCAD : contactInformation.accountUSD}</p>
+    )
 
     return (
       <div className='site-wrap'>
@@ -132,7 +125,7 @@ class InvoicePreview extends Component {
         <section className='section' style={{minHeight: '220px'}}>
         {this.mapObject(invoice.items, function (key, value) {
           return (
-            <div className='grid item'>
+            <div className='grid item' key={key}>
               <div className='grid__col--8'>
                 <strong>{invoice.items[key].name || 'Item'}</strong>
                 <p>{invoice.items[key].description || 'Description'}</p>
@@ -144,6 +137,7 @@ class InvoicePreview extends Component {
             )
         })}
         </section>
+
         <hr/>
 
         <section className='section'>
@@ -157,7 +151,7 @@ class InvoicePreview extends Component {
 
             {amountReceived}
 
-            <div className='grid__col--3 text-right'>
+            <div className='grid__col--3 grid__col--right text-right'>
               <h4>Balance Due</h4>
               <strong className='text-accent'><Money amount={invoice.balance || total()}/></strong>
             </div>
@@ -167,22 +161,15 @@ class InvoicePreview extends Component {
         <hr/>
 
         <section className='section' style={{minHeight: '220px'}}>
-          <p>
-            Please send payment within 21 days of receiving this invoice. We accept payment via wire transfer or cheque.
-          </p>
-          <p>
-            If you have any questions, feel free to contact us at
-            <a href='mailto:hello@volume7.io'> {contactInformation.email} </a>
-          </p>
-          <p>
-            Sincerely, <br/> The Volume7 team
-          </p>
+          <p>Please send payment within 21 days of receiving this invoice. We accept payment via wire transfer or cheque.</p>
+          <p>If you have any questions, feel free to contact us at<a href={`mailto:${contactInformation.email}`}> {contactInformation.email}</a></p>
+          <p>Sincerely, <br/> The Volume7 team</p>
         </section>
 
         <hr/>
 
         <footer className='section footer'>
-          <div className='grid grid--middle'>
+          <div className='grid'>
             <div className='grid__col--3'>
               <p>
                 <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
@@ -193,10 +180,10 @@ class InvoicePreview extends Component {
             <div className='grid__col--3'>
               <p>Institution: {contactInformation.institution}<br/>Transit: {contactInformation.transit}</p>
             </div>
-            <div className='grid__col--4'>
+            <div className='grid__col--3'>
               {account}
             </div>
-            <div className='grid__col--2 text-right'>
+            <div className='grid__col--3 text-right'>
               <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}}/></a>
             </div>
           </div>

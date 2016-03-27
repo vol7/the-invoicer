@@ -41,7 +41,7 @@ class InvoiceForm extends Component {
         <aside className='sidebar'>
           <h1 className='sidebar__title'>
             <img className='icon' src={invoicerLogo}/>
-            <span><i>Ze Invoicer</i> ©</span>
+            <span>Ze Invoicer</span>
           </h1>
           <div className='grid'>
             <div className='grid__col--4'>
@@ -90,23 +90,19 @@ class InvoiceForm extends Component {
             label='Balance Due'
           />
           <div className='field'>
-            <label className='field__label'>Location</label>
-            <input
-              className='field__input'
-              type='radio'
-              name='location'
-              value='Local'
-              checked={this.props.invoice.location === 'Local' ? 'checked' : ''}
-              onChange={this.onChange}>
-            </input>
-            <input
-              className='field__input'
-              type='radio'
-              name='location'
-              value='International'
-              checked={this.props.invoice.location === 'International' ? 'checked' : ''}
-              onChange={this.onChange}>
-            </input>
+            <label className='control' htmlFor='client-location'>
+              <input
+                className='control__input'
+                type='checkbox'
+                name='location'
+                id='client-location'
+                value='International'
+                checked={this.props.invoice.location === 'International' ? 'checked' : ''}
+                onChange={this.onChange}>
+              </input>
+              <span className='control__indicator control__indicator--checkbox'></span>
+              <span className='control__label'>International?</span>
+            </label>
           </div>
           <button type='button' onClick={this.reset} className='btn btn--primary'>Reset</button>
         </aside>

@@ -37,37 +37,16 @@ img {
 
 hr {
   display: block;
-  height: 2px;
+  height: 0;
   width: 100%;
   border: none;
   background: transparent;
   border-top: 2px solid $border;
+  margin: 0;
 }
 
 .site-wrap {
   max-width: $site-width;
   width: 90%;
   margin: 0 auto;
-}
-
-.item {
-  margin-bottom: 1.5em;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.delete-icon {
-  font-size: 32px;
-  line-height: 0.5;
-  transition: color $time $curve;
-
-  &:hover {
-    color: $white;
-  }
-}
-
-input::-webkit-inner-spin-button {
-     display: none;
 }

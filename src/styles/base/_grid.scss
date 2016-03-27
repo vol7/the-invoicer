@@ -22,6 +22,10 @@ $gutter: 1em;
   padding-right: ($gutter/2);
 }
 
+.grid__col--right {
+  margin-left: auto; // Floats to the right
+}
+
 @for $i from 0 through $columns + 1 {
   .grid__col--#{$i} {
     width: (((100 / $columns) * $i) * 1%);
