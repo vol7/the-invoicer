@@ -22,8 +22,8 @@ $gutter: 1em;
   padding-right: ($gutter/2);
 }
 
-.grid__col--right {
-  margin-left: auto; // Floats to the right
+.grid__col--grow {
+  flex: 1;
 }
 
 @for $i from 0 through $columns + 1 {

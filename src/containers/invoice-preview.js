@@ -65,7 +65,7 @@ class InvoicePreview extends Component {
     let taxes = ''
     if (invoice.location === 'Local') {
       taxes = (
-        <div className='grid__col--3'>
+        <div className='grid__col--grow'>
           <h4>TPS | TVQ</h4>
           <strong><Money amount={tps()}/> | <Money amount={tvq()}/></strong>
         </div>
@@ -75,7 +75,7 @@ class InvoicePreview extends Component {
     let amountReceived = ''
     if (invoice.amountReceived) {
       amountReceived = (
-        <div className='grid__col--3'>
+        <div className='grid__col--grow'>
           <h4>Paid</h4>
           <strong><Money amount={invoice.amountReceived}/></strong>
         </div>
@@ -142,7 +142,7 @@ class InvoicePreview extends Component {
 
         <section className='section'>
           <div className='grid grid--middle'>
-            <div className='grid__col--3'>
+            <div className='grid__col--grow'>
               <h4>Subtotal</h4>
               <strong><Money amount={subTotal()}/></strong>
             </div>
@@ -151,7 +151,7 @@ class InvoicePreview extends Component {
 
             {amountReceived}
 
-            <div className='grid__col--3 grid__col--right text-right'>
+            <div className='grid__col--grow text-right'>
               <h4>Balance Due</h4>
               <strong className='text-accent'><Money amount={invoice.balance || total()}/></strong>
             </div>
@@ -170,7 +170,7 @@ class InvoicePreview extends Component {
 
         <footer className='section footer'>
           <div className='grid'>
-            <div className='grid__col--3'>
+            <div className='grid__col--grow'>
               <p>
                 <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
                 <br/>
