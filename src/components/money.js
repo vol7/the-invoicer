@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Component } from 'react'
+import { connect } from 'react-redux'
 
 export default class Money extends Component {
   static propTypes = {
@@ -14,7 +15,7 @@ export default class Money extends Component {
     // Ignore the negative and simply add it at the end
     let sign = ''
     if (amount < 0) {
-      sign = '-'
+      sign = '- '
       amount = Math.abs(amount).toFixed(2)
     }
 
@@ -39,7 +40,11 @@ export default class Money extends Component {
       }
     }
     number = number.reverse().join('')
-    number = (sign + number + '.' + rightPart + '$')
+    if(this.props.international){
+    number = (sign + '$' +  number + '.' + rightPart)
+    } else {
+    number = (sign + number + '.' + rightPart + '$')      
+    }
     return number
   }
 
@@ -49,3 +54,11 @@ export default class Money extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {
+    international: state.invoice.international
+  }
+}
+
+export default connect(mapStateToProps)(Money)
