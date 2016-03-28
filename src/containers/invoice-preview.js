@@ -50,7 +50,7 @@ class InvoicePreview extends Component {
     }
 
     const total = function () {
-      const taxes = invoice.international  ? 1 : (1 + TVQ + TPS)
+      const taxes = invoice.international ? 1 : (1 + TVQ + TPS)
       return subTotal() * taxes - invoice.amountReceived
     }
 

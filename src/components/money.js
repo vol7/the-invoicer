@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 
 export default class Money extends Component {
   static propTypes = {
-    amount: PropTypes.node
+    amount: PropTypes.node,
+    international: PropTypes.boolean
   }
 
   // Formats currency to 1,234,567,890.99$
@@ -40,10 +41,10 @@ export default class Money extends Component {
       }
     }
     number = number.reverse().join('')
-    if(this.props.international){
-    number = (sign + '$' +  number + '.' + rightPart)
+    if (this.props.international) {
+      number = `${sign}$${number}.${rightPart}`
     } else {
-    number = (sign + number + '.' + rightPart + '$')      
+      number = `${sign}${number}.${rightPart}$`
     }
     return number
   }
