@@ -101,7 +101,7 @@ class InvoiceForm extends Component {
                 onChange={this.onChange}>
               </input>
               <span className='control__indicator control__indicator--checkbox'></span>
-              <span className='control__label'>International?</span>
+              <span className='control__label'>International client</span>
             </label>
           </div>
           <button type='button' onClick={this.reset} className='btn btn--primary'>Reset</button>

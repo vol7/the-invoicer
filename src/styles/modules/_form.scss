@@ -53,7 +53,7 @@ input::-webkit-inner-spin-button {
   height: 20px;
   vertical-align: middle;
   background-color: rgba($black, 0.25);
-  transition: background-color $time $curve;
+  transition: background-color $time/2 $curve;
 
   .control__input:checked + & {
     background-color: rgba($black, 0.35);
@@ -66,7 +66,7 @@ input::-webkit-inner-spin-button {
     top: 50%;
     left: 50%;
     opacity: 0;
-    transition: transform $time $curve, opacity $time $curve;
+    transition: transform $time/2 $curve, opacity $time/2 $curve;
 
     .control__input:checked + & {
       transform: none;
