@@ -2,6 +2,7 @@
 // Constants
 // ------------------------------------
 export const FIELD_CHANGE = 'FIELD_CHANGE'
+export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 
 // ------------------------------------
 // Actions
@@ -13,15 +14,23 @@ export function fieldChange (field) {
   }
 }
 
+export function locationChange (field) {
+  return {
+    type: LOCATION_CHANGE
+  }
+}
+
 export const actions = {
-  fieldChange
+  fieldChange,
+  locationChange
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [FIELD_CHANGE]: (state, action) => ({...state, ...action.payload})
+  [FIELD_CHANGE]: (state, action) => ({...state, ...action.payload}),
+  [LOCATION_CHANGE]: (state) => ({...state, international: !state.international})
 }
 
 // ------------------------------------
@@ -36,7 +45,7 @@ export const initialState = {
   projectName: '',
   amountReceived: '',
   balance: '',
-  location: 'Local',
+  international: false,
   items: [{
     description: '',
     price: null,

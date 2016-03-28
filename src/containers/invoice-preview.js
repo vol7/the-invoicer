@@ -28,7 +28,7 @@ class InvoicePreview extends Component {
       date: PropTypes.string,
       amountReceived: PropTypes.string,
       balance: PropTypes.string,
-      location: PropTypes.string
+      international: PropTypes.boolean
     })
   }
 
@@ -50,7 +50,7 @@ class InvoicePreview extends Component {
     }
 
     const total = function () {
-      const taxes = invoice.location === 'Local' ? (1 + TVQ + TPS) : 1
+      const taxes = invoice.international  ? 1 : (1 + TVQ + TPS)
       return subTotal() * taxes - invoice.amountReceived
     }
 
@@ -63,7 +63,7 @@ class InvoicePreview extends Component {
     }
 
     let taxes = ''
-    if (invoice.location === 'Local') {
+    if (!invoice.international) {
       taxes = (
         <div className='grid__col--grow'>
           <h4>TPS | TVQ</h4>
@@ -83,7 +83,7 @@ class InvoicePreview extends Component {
     }
 
     const account = (
-      <p>Account: {invoice.location === 'Local' ? contactInformation.accountCAD : contactInformation.accountUSD}</p>
+      <p>Account: {invoice.international ? contactInformation.accountUSD : contactInformation.accountCAD}</p>
     )
 
     return (
@@ -161,8 +161,10 @@ class InvoicePreview extends Component {
         <hr/>
 
         <section className='section' style={{minHeight: '220px'}}>
-          <p>Please send payment within 21 days of receiving this invoice. We accept payment via wire transfer or cheque.</p>
-          <p>If you have any questions, feel free to contact us at<a href={`mailto:${contactInformation.email}`}> {contactInformation.email}</a></p>
+          <p>Please send payment within 21 days of receiving this invoice.
+          We accept payment via wire transfer or cheque.</p>
+          <p>If you have any questions, feel free to contact us at <a href={`mailto:${contactInformation.email}`}>
+          {contactInformation.email}</a></p>
           <p>Sincerely, <br/> The Volume7 team</p>
         </section>
 

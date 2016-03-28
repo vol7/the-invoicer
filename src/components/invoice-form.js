@@ -15,6 +15,7 @@ import { initialState } from '../redux/modules/invoice'
 class InvoiceForm extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired,
+    locationChange: PropTypes.func.isRequired,
     invoice: PropTypes.object
   }
 
@@ -22,11 +23,16 @@ class InvoiceForm extends Component {
     super(props)
 
     this.onChange = this.onChange.bind(this)
+    this.onLocationChange = this.onLocationChange.bind(this)
     this.reset = this.reset.bind(this)
   }
 
   onChange (event) {
     this.props.fieldChange({[event.target.name]: event.target.value})
+  }
+
+  onLocationChange () {
+    this.props.locationChange()
   }
 
   reset () {
@@ -97,8 +103,8 @@ class InvoiceForm extends Component {
                 name='location'
                 id='client-location'
                 value='International'
-                checked={this.props.invoice.location === 'International' ? 'checked' : ''}
-                onChange={this.onChange}>
+                checked={this.props.invoice.international ? 'checked' : ''}
+                onChange={this.onLocationChange}>
               </input>
               <span className='control__indicator control__indicator--checkbox'></span>
               <span className='control__label'>International client</span>
@@ -118,7 +124,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)
+  return bindActionCreators({ fieldChange: actions.fieldChange, locationChange: actions.locationChange }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceForm)
