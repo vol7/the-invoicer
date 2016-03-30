@@ -45,7 +45,7 @@ class InvoiceForm extends Component {
         this.props.fieldChange({client: customers[i]})
         foundMatch = true
       }
-    }    
+    }
   }
 
   onLocationChange () {

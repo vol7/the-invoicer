@@ -2,34 +2,13 @@ import React, { Component } from 'react'
 import { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import logo from '../../images/logo.svg'
-import logoMuted from '../../images/logo-muted.svg'
-
 import Money from '../components/money'
-
-const contactInformation = {
-  name: 'Volume7 Inc.',
-  adress: '94 Champlain, Montreal, QC H8Y 3S5',
-  email: 'hello@volume7.io',
-  website: 'volume7.io',
-  institution: '003',
-  transit: '07671',
-  accountUSD: '4002648',
-  accountCAD: '1009620'
-}
+import InvoicePreviewFooter from '../components/_invoice-preview-footer'
+import InvoicePreviewHeader from '../components/_invoice-preview-header'
 
 class InvoicePreview extends Component {
   static propTypes = {
-    invoice: PropTypes.shape({
-      number: PropTypes.string,
-      clientName: PropTypes.string,
-      projectName: PropTypes.string,
-      purpose: PropTypes.string,
-      date: PropTypes.string,
-      amountReceived: PropTypes.string,
-      balance: PropTypes.string,
-      international: PropTypes.bool
-    })
+    invoice: PropTypes.object
   }
 
   mapObject (object, callback) {
@@ -62,49 +41,30 @@ class InvoicePreview extends Component {
       return subTotal() * TPS
     }
 
-    let tpsDisplay = ''
-    if (!invoice.international) {
-      tpsDisplay = (
-        <div className='grid__col--grow'>
-          <h4>TPS</h4>
-          <strong><Money amount={tps()}/></strong>
-        </div>
-      )
-    }
+    let tpsDisplay = invoice.international ? '' : (
+      <div className='grid__col--grow'>
+        <h4>TPS</h4>
+        <strong><Money amount={tps()}/></strong>
+      </div>
+    )
 
-    let tvqDisplay = ''
-    if (!invoice.international) {
-      tvqDisplay = (
-        <div className='grid__col--grow'>
-          <h4>TVQ</h4>
-          <strong><Money amount={tvq()}/></strong>
-        </div>
-      )
-    }
+    let tvqDisplay = invoice.international ? '' : (
+      <div className='grid__col--grow'>
+        <h4>TVQ</h4>
+        <strong><Money amount={tvq()}/></strong>
+      </div>
+    )
 
-    let amountReceived = ''
-    if (invoice.amountReceived) {
-      amountReceived = (
-        <div className='grid__col--grow'>
-          <h4>Paid</h4>
-          <strong><Money amount={invoice.amountReceived}/></strong>
-        </div>
-      )
-    }
-
-    const account = (
-      <p>Account: {invoice.international ? contactInformation.accountUSD : contactInformation.accountCAD}</p>
+    let amountReceived = !invoice.amountReceived ? '' : (
+      <div className='grid__col--grow'>
+        <h4>Paid</h4>
+        <strong><Money amount={invoice.amountReceived}/></strong>
+      </div>
     )
 
     return (
       <div className='site-wrap'>
-        <header className='header'>
-          <div className='grid grid--middle'>
-            <div className='grid__col--3'><img src={logo} style={{width: '46px'}}/></div>
-            <div className='grid__col--3'><strong>{contactInformation.name}</strong></div>
-            <div className='grid__col--6 text-right'><strong>{contactInformation.adress}</strong></div>
-          </div>
-        </header>
+        <InvoicePreviewHeader />
         <section className='section'>
           <div className='grid'>
             <div className='grid__col--3'>
@@ -126,7 +86,6 @@ class InvoicePreview extends Component {
               <h4>Date</h4>
               <strong>{invoice.date}</strong>
             </div>
-
           </div>
         </section>
 
@@ -171,37 +130,7 @@ class InvoicePreview extends Component {
 
         <hr/>
 
-        <section className='section' style={{minHeight: '220px'}}>
-          <p>Please send payment within 21 days of receiving this invoice.
-          We accept payment via wire transfer or cheque.</p>
-          <p>If you have any questions, feel free to contact us at <a href={`mailto:${contactInformation.email}`}>
-          {contactInformation.email}</a></p>
-          <p>Sincerely, <br/> The Volume7 team</p>
-        </section>
-
-        <hr/>
-
-        <footer className='section footer'>
-          <div className='grid'>
-            <div className='grid__col--grow'>
-              <p>
-                <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
-                <br/>
-                <a href='http://volume7.io'>{contactInformation.website}</a>
-              </p>
-            </div>
-            <div className='grid__col--3'>
-              <p>Institution: {contactInformation.institution}<br/>Transit: {contactInformation.transit}</p>
-            </div>
-            <div className='grid__col--3'>
-              {account}
-            </div>
-            <div className='grid__col--3 text-right'>
-              <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}}/></a>
-            </div>
-          </div>
-        </footer>
-
+        <InvoicePreviewFooter invoice={invoice}/>
       </div>
     )
   }

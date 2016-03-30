@@ -30,15 +30,15 @@ function reqAction () {
 
 function buildUploadBody (state) {
   let lines = []
-  state.invoice.items.map(function (item){
+  state.invoice.items.map(function (item) {
     let description = `${item.name}: ${item.description}`
     lines.push({
       Description: description,
       Amount: item.price,
-      DetailType: "SalesItemLineDetail",
+      DetailType: 'SalesItemLineDetail',
       SalesItemLineDetail: {
         ItemRef: {
-            value: "1"
+          value: '1'
         }
       }
     })
