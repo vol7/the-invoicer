@@ -6,7 +6,7 @@ import update from 'react-addons-update'
 
 import FormItem from './form-item'
 
-import { actions } from '../redux/modules/invoice'
+import { invoiceActions } from '../redux/modules/invoice'
 
 const emptyItem = {
   description: '',
@@ -83,7 +83,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)
+  return bindActionCreators({ fieldChange: invoiceActions.fieldChange }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormItemList)

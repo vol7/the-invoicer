@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 export default class Money extends Component {
   static propTypes = {
     amount: PropTypes.node,
-    international: PropTypes.boolean
+    international: PropTypes.bool
   }
 
   // Formats currency to 1,234,567,890.99$

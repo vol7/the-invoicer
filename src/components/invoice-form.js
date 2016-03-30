@@ -6,7 +6,8 @@ import { bindActionCreators } from 'redux'
 import FormItemList from './form-item-list'
 import FormInput from './form-input'
 
-import { actions } from '../redux/modules/invoice'
+import { invoiceActions } from '../redux/modules/invoice'
+import { customersActions } from '../redux/modules/customers'
 
 import invoicerLogo from '../../images/invoicer-logo.svg'
 
@@ -16,19 +17,35 @@ class InvoiceForm extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired,
     locationChange: PropTypes.func.isRequired,
-    invoice: PropTypes.object
+    requestCustomers: PropTypes.func.isRequired,
+    requestUploadInvoice: PropTypes.func.isRequired,
+    invoice: PropTypes.object,
+    customers: PropTypes.object
   }
 
   constructor (props) {
     super(props)
 
     this.onChange = this.onChange.bind(this)
+    this.onClientChange = this.onClientChange.bind(this)
     this.onLocationChange = this.onLocationChange.bind(this)
     this.reset = this.reset.bind(this)
+    this.props.requestCustomers()
   }
 
   onChange (event) {
     this.props.fieldChange({[event.target.name]: event.target.value})
+  }
+
+  onClientChange (event) {
+    const customers = this.props.customers.customers
+    let foundMatch = false
+    for (let i = 0; !foundMatch && i < customers.length; i++) {
+      if (customers[i].id === event.target.value) {
+        this.props.fieldChange({client: customers[i]})
+        foundMatch = true
+      }
+    }    
   }
 
   onLocationChange () {
@@ -67,12 +84,22 @@ class InvoiceForm extends Component {
               />
             </div>
           </div>
-          <FormInput
-            type='text'
-            name='clientName'
-            value={this.props.invoice.clientName}
-            label='Client'
-          />
+
+          <div className='field'>
+            <label className='field__label'>Client</label>
+            <select
+              className='field__input'
+              value={this.props.invoice.client.id}
+              onChange={this.onClientChange}>
+              <option value=''></option>
+                {this.props.customers.customers.map(function (customer) {
+                  return (
+                    <option key={customer.id} value={customer.id}>{customer.name}</option>
+                  )
+                })}
+            </select>
+          </div>
+
           <FormInput
             type='text'
             name='projectName'
@@ -111,6 +138,8 @@ class InvoiceForm extends Component {
             </label>
           </div>
           <button type='button' onClick={this.reset} className='btn btn--primary'>Reset</button>
+          <hr/>
+          <button type='button' onClick={this.props.requestUploadInvoice} className='btn btn--primary'>Upload</button>
         </aside>
       </div>
     )
@@ -119,12 +148,17 @@ class InvoiceForm extends Component {
 
 function mapStateToProps (state) {
   return {
-    invoice: state.invoice
+    invoice: state.invoice,
+    customers: state.customers
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fieldChange: actions.fieldChange, locationChange: actions.locationChange }, dispatch)
+  return bindActionCreators({
+    fieldChange: invoiceActions.fieldChange,
+    locationChange: invoiceActions.locationChange,
+    requestUploadInvoice: invoiceActions.requestUploadInvoice,
+    requestCustomers: customersActions.requestCustomers }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceForm)

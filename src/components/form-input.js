@@ -3,7 +3,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { actions } from '../redux/modules/invoice'
+import { invoiceActions } from '../redux/modules/invoice'
 
 class FormInput extends Component {
   static propTypes = {
@@ -41,7 +41,7 @@ class FormInput extends Component {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fieldChange: actions.fieldChange }, dispatch)
+  return bindActionCreators({ fieldChange: invoiceActions.fieldChange }, dispatch)
 }
 
 export default connect(null, mapDispatchToProps)(FormInput)

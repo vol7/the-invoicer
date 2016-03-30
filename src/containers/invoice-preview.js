@@ -28,7 +28,7 @@ class InvoicePreview extends Component {
       date: PropTypes.string,
       amountReceived: PropTypes.string,
       balance: PropTypes.string,
-      international: PropTypes.boolean
+      international: PropTypes.bool
     })
   }
 
@@ -62,12 +62,22 @@ class InvoicePreview extends Component {
       return subTotal() * TPS
     }
 
-    let taxes = ''
+    let tpsDisplay = ''
     if (!invoice.international) {
-      taxes = (
+      tpsDisplay = (
         <div className='grid__col--grow'>
-          <h4>TPS | TVQ</h4>
-          <strong><Money amount={tps()}/> | <Money amount={tvq()}/></strong>
+          <h4>TPS</h4>
+          <strong><Money amount={tps()}/></strong>
+        </div>
+      )
+    }
+
+    let tvqDisplay = ''
+    if (!invoice.international) {
+      tvqDisplay = (
+        <div className='grid__col--grow'>
+          <h4>TVQ</h4>
+          <strong><Money amount={tvq()}/></strong>
         </div>
       )
     }
@@ -104,7 +114,7 @@ class InvoicePreview extends Component {
 
             <div className='grid__col--3'>
               <h4>Client</h4>
-              <strong>{invoice.clientName}</strong>
+              <strong>{invoice.client.name}</strong>
             </div>
 
             <div className='grid__col--3'>
@@ -147,7 +157,8 @@ class InvoicePreview extends Component {
               <strong><Money amount={subTotal()}/></strong>
             </div>
 
-            {taxes}
+            {tpsDisplay}
+            {tvqDisplay}
 
             {amountReceived}
 
