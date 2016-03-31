@@ -30,6 +30,7 @@ class InvoiceForm extends Component {
     this.onClientChange = this.onClientChange.bind(this)
     this.onLocationChange = this.onLocationChange.bind(this)
     this.reset = this.reset.bind(this)
+
     this.props.requestCustomers()
   }
 

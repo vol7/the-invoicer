@@ -2,15 +2,33 @@ import React from 'react'
 import { PropTypes } from 'react'
 import { Component } from 'react'
 import drag from '../../images/drag.svg'
-
+import { DragSource } from 'react-dnd'
 import update from 'react-addons-update'
 
-export default class FormItem extends Component {
+const invoiceItemSource = {
+  beginDrag (props) {
+    return { invoiceItemIndex: props.index }
+  }
+}
+
+export const ItemTypes = {
+  INVOICE_ITEM: 'invoiceItem'
+}
+
+function collect (connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging()
+  }
+}
+
+class FormItem extends Component {
   static propTypes = {
     removeItem: PropTypes.func.isRequired,
     changeItem: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
-    item: PropTypes.object.isRequired
+    item: PropTypes.object.isRequired,
+    connectDragSource: PropTypes.func
   }
 
   constructor (props) {
@@ -32,7 +50,8 @@ export default class FormItem extends Component {
   }
 
   render () {
-    return (
+    const { connectDragSource, isDragging } = this.props
+    return connectDragSource(
       <div>
         <div className='grid'>
           <div className='grid__col--10'>
@@ -86,3 +105,5 @@ export default class FormItem extends Component {
     )
   }
 }
+
+export default DragSource(ItemTypes.INVOICE_ITEM, invoiceItemSource, collect)(FormItem)

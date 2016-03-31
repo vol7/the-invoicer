@@ -3,8 +3,10 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import update from 'react-addons-update'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
-import FormItem from './form-item'
+import FormItemWrap from './form-item-wrap'
 
 import { invoiceActions } from '../redux/modules/invoice'
 
@@ -17,6 +19,7 @@ const emptyItem = {
 class FormItemList extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired,
+    moveItem: PropTypes.func.isRequired,
     invoice: PropTypes.object
   }
 
@@ -61,12 +64,13 @@ class FormItemList extends Component {
     return (
       <div>
         {this.props.invoice.items.map((item, i) =>
-          <FormItem
+          <FormItemWrap
             item={item}
             key={i}
             index={i}
             removeItem={this.removeItem}
             changeItem={this.changeItem}
+            moveItem={this.props.moveItem}
           />
         )}
         <button onClick={this.addItem} className='btn btn--ghost'>+ Add item</button>
@@ -83,7 +87,8 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fieldChange: invoiceActions.fieldChange }, dispatch)
+  return bindActionCreators({ fieldChange: invoiceActions.fieldChange,
+  moveItem: invoiceActions.moveItem}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormItemList)
+export default DragDropContext(HTML5Backend)(connect(mapStateToProps, mapDispatchToProps)(FormItemList))

@@ -5,6 +5,7 @@ export const FIELD_CHANGE = 'FIELD_CHANGE'
 export const LOCATION_CHANGE = 'LOCATION_CHANGE'
 export const REQUEST_UPLOAD_INVOICE = 'REQUEST_UPLOAD_INVOICE'
 export const RECEIVE_UPLOAD_INVOICE = 'RECEIVE_UPLOAD_INVOICE'
+export const MOVE_ITEM = 'MOVE_ITEM'
 
 // ------------------------------------
 // Actions
@@ -19,6 +20,16 @@ function fieldChange (field) {
 function locationChange (field) {
   return {
     type: LOCATION_CHANGE
+  }
+}
+
+function moveItem (fromIndex, toIndex) {
+  return {
+    type: MOVE_ITEM,
+    payload: {
+      fromIndex: fromIndex,
+      toIndex: toIndex
+    }
   }
 }
 
@@ -73,6 +84,7 @@ const receiveUploadInvoice = (RECEIVE_UPLOAD_INVOICE, () => {
 export const invoiceActions = {
   fieldChange,
   locationChange,
+  moveItem,
   requestUploadInvoice
 }
 
@@ -83,7 +95,14 @@ const ACTION_HANDLERS = {
   [FIELD_CHANGE]: (state, action) => ({...state, ...action.payload}),
   [LOCATION_CHANGE]: (state) => ({...state, international: !state.international}),
   [REQUEST_UPLOAD_INVOICE]: (state) => (state),
-  [RECEIVE_UPLOAD_INVOICE]: (state) => (state)
+  [RECEIVE_UPLOAD_INVOICE]: (state) => (state),
+  [MOVE_ITEM]: (state, action) => (moveItemFunction(state, action))
+}
+
+function moveItemFunction (state, action) {
+  let newItems = state.items
+  newItems.splice(action.payload.toIndex, 0, newItems.splice(action.payload.fromIndex, 1)[0])
+  return {...state, items: newItems}
 }
 
 // ------------------------------------
