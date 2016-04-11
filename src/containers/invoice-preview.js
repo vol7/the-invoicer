@@ -74,7 +74,7 @@ class InvoicePreview extends Component {
 
             <div className='grid__col--3'>
               <h4>Client</h4>
-              <strong>{invoice.client.name}</strong>
+              <strong>{invoice.client}</strong>
             </div>
 
             <div className='grid__col--3'>
