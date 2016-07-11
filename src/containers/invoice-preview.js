@@ -37,21 +37,21 @@ class InvoicePreview extends Component {
     const subtotalDisplay = (
       <div className='grid__col--3'>
         <h4>Subtotal</h4>
-        <strong><Money amount={subTotal()}/></strong>
+        <strong><Money amount={subTotal()} /></strong>
       </div>
     )
 
     const tpsDisplay = !invoice.international ? (
       <div className='grid__col--3'>
         <h4>TPS</h4>
-        <strong><Money amount={tps()}/></strong>
+        <strong><Money amount={tps()} /></strong>
       </div>
     ) : null
 
     const tvqDisplay = !invoice.international ? (
       <div className='grid__col--3'>
         <h4>TVQ</h4>
-        <strong><Money amount={tvq()}/></strong>
+        <strong><Money amount={tvq()} /></strong>
       </div>
     ) : null
 
@@ -60,7 +60,7 @@ class InvoicePreview extends Component {
     const totalDisplay = (
       <div className={'grid__col--3'}>
         <h4>Total</h4>
-        <strong className={totalTextClasses}><Money amount={total()}/></strong>
+        <strong className={totalTextClasses}><Money amount={total()} /></strong>
       </div>
     )
 
@@ -69,14 +69,14 @@ class InvoicePreview extends Component {
     const paidDisplay = invoice.paid ? (
       <div className='grid__col--3'>
         <h4>Paid</h4>
-        <strong className={paidTextClasses}><Money amount={invoice.paid}/></strong>
+        <strong className={paidTextClasses}><Money amount={invoice.paid} /></strong>
       </div>
     ) : null
 
     const balanceDisplay = invoice.paid ? (
       <div className='grid__col--3'>
         <h4>Balance</h4>
-        <strong><Money amount={balance()}/></strong>
+        <strong><Money amount={balance()} /></strong>
       </div>
     ) : null
 
@@ -85,7 +85,7 @@ class InvoicePreview extends Component {
     const paymentDueDisplay = invoice.paymentDue && invoice.paid ? (
       <div className='grid__col--3'>
         <h4>Payment due</h4>
-        <strong className={paymentDueClasses}><Money amount={invoice.paymentDue}/></strong>
+        <strong className={paymentDueClasses}><Money amount={invoice.paymentDue} /></strong>
       </div>
     ) : null
 
@@ -116,7 +116,7 @@ class InvoicePreview extends Component {
           </div>
         </section>
 
-        <hr/>
+        <hr />
 
         <section className='section' style={{minHeight: '220px'}}>
           {this.mapObject(invoice.items, function (key, value) {
@@ -127,14 +127,14 @@ class InvoicePreview extends Component {
                   <p>{invoice.items[key].description || 'Description'}</p>
                 </div>
                 <div className='grid__col--4 text-right'>
-                  <strong><Money amount={invoice.items[key].price}/></strong>
+                  <strong><Money amount={invoice.items[key].price} /></strong>
                 </div>
               </div>
             )
           })}
         </section>
 
-        <hr/>
+        <hr />
 
         <section className='section'>
           <div className='grid grid--middle'>
@@ -156,9 +156,9 @@ class InvoicePreview extends Component {
           </div>
         </section>
 
-        <hr/>
+        <hr />
 
-        <InvoicePreviewFooter invoice={invoice}/>
+        <InvoicePreviewFooter invoice={invoice} />
       </div>
     )
   }

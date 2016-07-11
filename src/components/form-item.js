@@ -114,7 +114,7 @@ class FormItem extends Component {
           <div className='grid'>
             <div className='grid__col--10'>
               <h3 className='sidebar__item'>
-                <img className='icon icon--small' src={drag}/>
+                <img className='icon icon--small' src={drag} />
                 <span>{this.props.item.name || 'Item'}</span>
               </h3>
             </div>
@@ -158,7 +158,7 @@ class FormItem extends Component {
               onChange={this.changeItem}>
             </input>
           </div>
-          <hr/>
+          <hr />
         </div>
       </div>
     ))

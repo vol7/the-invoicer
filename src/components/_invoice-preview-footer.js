@@ -3,16 +3,20 @@ import { Component } from 'react'
 
 import logoMuted from '../../images/logo-muted.svg'
 
-import {contactInformation} from './_invoice-preview-header'
+import { contactInformation } from './_invoice-preview-header'
 
 export default class InvoicePreviewFooter extends Component {
   static propTypes = {
     invoice: PropTypes.object
   }
   render () {
-    const account = (
-      <p>Account: {this.props.invoice.international ? contactInformation.accountUSD : contactInformation.accountCAD}</p>
-    )
+    const { invoice } = this.props
+
+    const account = `Account: ${invoice.international ? contactInformation.accountUSD : contactInformation.accountCAD}`
+
+    const swiftBIC = invoice.international ? (
+      <div>Swift BIC: ROYCCAT2</div>
+    ) : null
 
     return (
       <div>
@@ -21,28 +25,34 @@ export default class InvoicePreviewFooter extends Component {
           We accept payment via wire transfer or cheque.</p>
           <p>If you have any questions, feel free to contact us at <a href={`mailto:${contactInformation.email}`}>
           {contactInformation.email}</a></p>
-          <p>Sincerely, <br/> The Volume7 team</p>
+          <p>Sincerely, <br /> The Volume7 team</p>
         </section>
 
-        <hr/>
+        <hr />
 
         <footer className='section footer'>
           <div className='grid'>
-            <div className='grid__col--grow'>
+            <div className='grid__col--3'>
               <p>
                 <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
-                <br/>
+                <br />
                 <a href='http://volume7.io'>{contactInformation.website}</a>
               </p>
             </div>
             <div className='grid__col--3'>
-              <p>Institution: {contactInformation.institution}<br/>Transit: {contactInformation.transit}</p>
+              <p>
+                Institution: {contactInformation.institution}<br />
+                Transit: {contactInformation.transit}
+              </p>
             </div>
             <div className='grid__col--3'>
-              {account}
+              <p>
+                {account}
+                {swiftBIC}
+              </p>
             </div>
             <div className='grid__col--3 text-right'>
-              <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}}/></a>
+              <a href='http://volume7.io'><img src={logoMuted} style={{width: '46px'}} /></a>
             </div>
           </div>
         </footer>

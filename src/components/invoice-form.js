@@ -45,7 +45,7 @@ class InvoiceForm extends Component {
       <div>
         <aside className='sidebar'>
           <h1 className='sidebar__title'>
-            <img className='icon' src={invoicerLogo}/>
+            <img className='icon' src={invoicerLogo} />
             <span>Ze Invoicer</span>
           </h1>
           <div className='grid'>
@@ -82,7 +82,7 @@ class InvoiceForm extends Component {
             value={this.props.invoice.projectName}
             label='Project'
           />
-          <hr/>
+          <hr />
 
           <FormItemList />
 
@@ -93,7 +93,7 @@ class InvoiceForm extends Component {
             label='Paid'
           />
 
-          { this.props.invoice.paid ?
+          {this.props.invoice.paid ?
             <FormInput
               type='number'
               name='paymentDue'

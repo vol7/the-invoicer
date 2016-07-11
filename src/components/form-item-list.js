@@ -82,7 +82,7 @@ class FormItemList extends Component {
   render () {
     return (
       <div>
-        <card/>
+        <card />
         {this.props.invoice.items.map((item, i) =>
           <FormItem
             item={item}
@@ -95,7 +95,7 @@ class FormItemList extends Component {
           />
         )}
         <button onClick={this.addItem} className='btn btn--ghost'>+ Add item</button>
-        <hr/>
+        <hr />
       </div>
     )
   }
