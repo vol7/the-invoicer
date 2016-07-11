@@ -16,7 +16,7 @@ export default class Money extends Component {
     // Ignore the negative and simply add it at the end
     let sign = ''
     if (amount < 0) {
-      sign = '- '
+      sign = '-'
       amount = Math.abs(amount).toFixed(2)
     }
 

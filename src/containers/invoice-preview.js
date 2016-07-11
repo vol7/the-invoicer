@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'react'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 import Money from '../components/money'
 import InvoicePreviewFooter from '../components/_invoice-preview-footer'
@@ -18,9 +19,9 @@ class InvoicePreview extends Component {
   }
 
   render () {
-    const invoice = this.props.invoice
+    const { invoice } = this.props
 
-    const subTotal = function () {
+    const subTotal = () => {
       if (invoice.items && invoice.items.length) {
         return (invoice.items.map((item) => (parseFloat(item.price)) || 0).reduce((a, b) => a + b))
       } else {
@@ -28,39 +29,65 @@ class InvoicePreview extends Component {
       }
     }
 
-    const total = function () {
-      const taxes = invoice.international ? 1 : (1 + TVQ + TPS)
-      return subTotal() * taxes - invoice.amountReceived
-    }
+    const tvq = () => subTotal() * TVQ
+    const tps = () => subTotal() * TPS
+    const total = () => subTotal() + tps() + tvq()
+    const balance = () => total() - invoice.paid
 
-    const tvq = function () {
-      return subTotal() * TVQ
-    }
+    const subtotalDisplay = (
+      <div className='grid__col--3'>
+        <h4>Subtotal</h4>
+        <strong><Money amount={subTotal()}/></strong>
+      </div>
+    )
 
-    const tps = function () {
-      return subTotal() * TPS
-    }
-
-    let tpsDisplay = invoice.international ? '' : (
-      <div className='grid__col--grow'>
+    const tpsDisplay = !invoice.international ? (
+      <div className='grid__col--3'>
         <h4>TPS</h4>
         <strong><Money amount={tps()}/></strong>
       </div>
-    )
+    ) : null
 
-    let tvqDisplay = invoice.international ? '' : (
-      <div className='grid__col--grow'>
+    const tvqDisplay = !invoice.international ? (
+      <div className='grid__col--3'>
         <h4>TVQ</h4>
         <strong><Money amount={tvq()}/></strong>
       </div>
-    )
+    ) : null
 
-    let amountReceived = !invoice.amountReceived ? '' : (
-      <div className='grid__col--grow'>
-        <h4>Paid</h4>
-        <strong><Money amount={invoice.amountReceived}/></strong>
+    const totalTextClasses = classNames({ 'text-accent':  !invoice.paid && !invoice.paymentDue })
+
+    const totalDisplay = (
+      <div className={'grid__col--3'}>
+        <h4>Total</h4>
+        <strong className={totalTextClasses}><Money amount={total()}/></strong>
       </div>
     )
+
+    const paidTextClasses = classNames({ 'text-accent': invoice.paid && !invoice.paymentDue })
+
+    const paidDisplay = invoice.paid ? (
+      <div className='grid__col--3'>
+        <h4>Paid</h4>
+        <strong className={paidTextClasses}><Money amount={invoice.paid}/></strong>
+      </div>
+    ) : null
+
+    const balanceDisplay = invoice.paid ? (
+      <div className='grid__col--3'>
+        <h4>Balance</h4>
+        <strong><Money amount={balance()}/></strong>
+      </div>
+    ) : null
+
+    const paymentDueClasses = classNames({ 'text-accent': invoice.paid && invoice.paymentDue })
+
+    const paymentDueDisplay = invoice.paymentDue && invoice.paid ? (
+      <div className='grid__col--3'>
+        <h4>Payment due</h4>
+        <strong className={paymentDueClasses}><Money amount={invoice.paymentDue}/></strong>
+      </div>
+    ) : null
 
     return (
       <div className='site-wrap'>
@@ -92,39 +119,40 @@ class InvoicePreview extends Component {
         <hr/>
 
         <section className='section' style={{minHeight: '220px'}}>
-        {this.mapObject(invoice.items, function (key, value) {
-          return (
-            <div className='grid item' key={key}>
-              <div className='grid__col--8'>
-                <strong>{invoice.items[key].name || 'Item'}</strong>
-                <p>{invoice.items[key].description || 'Description'}</p>
+          {this.mapObject(invoice.items, function (key, value) {
+            return (
+              <div className='grid item' key={key}>
+                <div className='grid__col--8'>
+                  <strong>{invoice.items[key].name || 'Item'}</strong>
+                  <p>{invoice.items[key].description || 'Description'}</p>
+                </div>
+                <div className='grid__col--4 text-right'>
+                  <strong><Money amount={invoice.items[key].price}/></strong>
+                </div>
               </div>
-              <div className='grid__col--4 text-right'>
-                <strong><Money amount={invoice.items[key].price}/></strong>
-              </div>
-            </div>
             )
-        })}
+          })}
         </section>
 
         <hr/>
 
         <section className='section'>
           <div className='grid grid--middle'>
-            <div className='grid__col--grow'>
-              <h4>Subtotal</h4>
-              <strong><Money amount={subTotal()}/></strong>
-            </div>
 
+            {subtotalDisplay}
             {tpsDisplay}
             {tvqDisplay}
+            {totalDisplay}
 
-            {amountReceived}
+          </div>
+        </section>
+        <section className={classNames({'hidden': !paidDisplay && !balanceDisplay && !paymentDueDisplay, 'section': true })}>
+          <div className='grid grid--middle'>
 
-            <div className='grid__col--grow text-right'>
-              <h4>Balance Due</h4>
-              <strong className='text-accent'><Money amount={invoice.balance || total()}/></strong>
-            </div>
+            {paidDisplay}
+            {balanceDisplay}
+            {paymentDueDisplay}
+
           </div>
         </section>
 

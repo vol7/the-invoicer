@@ -88,16 +88,20 @@ class InvoiceForm extends Component {
 
           <FormInput
             type='number'
-            name='amountReceived'
-            value={this.props.invoice.amountReceived}
+            name='paid'
+            value={this.props.invoice.paid}
             label='Paid'
           />
-          <FormInput
-            type='number'
-            name='balance'
-            value={this.props.invoice.balance}
-            label='Balance Due'
-          />
+
+          { this.props.invoice.paid ?
+            <FormInput
+              type='number'
+              name='paymentDue'
+              value={this.props.invoice.paymentDue}
+              label='Payment Due'
+            /> : null
+          }
+
           <div className='field'>
             <label className='control' htmlFor='client-location'>
               <input

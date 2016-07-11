@@ -63,7 +63,8 @@ export const initialState = {
   client: '',
   projectName: '',
   amountReceived: '',
-  balance: '',
+  paid: '',
+  paymentDue: '',
   international: false,
   items: [{
     description: '',
