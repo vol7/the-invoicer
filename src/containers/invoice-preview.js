@@ -31,24 +31,24 @@ class InvoicePreview extends Component {
 
     const tvq = () => subTotal() * TVQ
     const tps = () => subTotal() * TPS
-    const total = () => subTotal() + tps() + tvq()
+    const total = () => subTotal() + (invoice.taxes ? tps() + tvq() : 0)
     const balance = () => total() - invoice.paid
 
-    const subtotalDisplay = (
+    const subtotalDisplay = invoice.taxes ? (
       <div className='grid__col--3'>
         <h4>Subtotal</h4>
         <strong><Money amount={subTotal()} /></strong>
       </div>
-    )
+    ) : null
 
-    const tpsDisplay = !invoice.international ? (
+    const tpsDisplay = invoice.taxes ? (
       <div className='grid__col--3'>
         <h4>TPS</h4>
         <strong><Money amount={tps()} /></strong>
       </div>
     ) : null
 
-    const tvqDisplay = !invoice.international ? (
+    const tvqDisplay = invoice.taxes ? (
       <div className='grid__col--3'>
         <h4>TVQ</h4>
         <strong><Money amount={tvq()} /></strong>

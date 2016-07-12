@@ -3,6 +3,7 @@
 // ------------------------------------
 export const FIELD_CHANGE = 'FIELD_CHANGE'
 export const LOCATION_CHANGE = 'LOCATION_CHANGE'
+export const TAXES_CHANGE = 'TAXES_CHANGE'
 export const MOVE_ITEM = 'MOVE_ITEM'
 
 // ------------------------------------
@@ -15,9 +16,15 @@ function fieldChange (field) {
   }
 }
 
-function locationChange (field) {
+function locationChange () {
   return {
     type: LOCATION_CHANGE
+  }
+}
+
+function taxesChange () {
+  return {
+    type: TAXES_CHANGE
   }
 }
 
@@ -34,6 +41,7 @@ function moveItem (fromIndex, toIndex) {
 export const invoiceActions = {
   fieldChange,
   locationChange,
+  taxesChange,
   moveItem
 }
 
@@ -43,6 +51,7 @@ export const invoiceActions = {
 const ACTION_HANDLERS = {
   [FIELD_CHANGE]: (state, action) => ({...state, ...action.payload}),
   [LOCATION_CHANGE]: (state) => ({...state, international: !state.international}),
+  [TAXES_CHANGE]: (state) => ({...state, taxes: !state.taxes}),
   [MOVE_ITEM]: (state, action) => (moveItemFunction(state, action))
 }
 
@@ -66,6 +75,7 @@ export const initialState = {
   paid: '',
   paymentDue: '',
   international: false,
+  taxes: true,
   items: [{
     description: '',
     price: null,

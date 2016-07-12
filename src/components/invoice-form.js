@@ -16,6 +16,7 @@ class InvoiceForm extends Component {
   static propTypes = {
     fieldChange: PropTypes.func.isRequired,
     locationChange: PropTypes.func.isRequired,
+    taxesChange: PropTypes.func.isRequired,
     invoice: PropTypes.object
   }
 
@@ -24,14 +25,20 @@ class InvoiceForm extends Component {
 
     this.onChange = this.onChange.bind(this)
     this.onLocationChange = this.onLocationChange.bind(this)
+    this.onTaxesChange = this.onTaxesChange.bind(this)
     this.reset = this.reset.bind(this)
   }
 
   onChange (event) {
     this.props.fieldChange({[event.target.name]: event.target.value})
   }
+
   onLocationChange () {
     this.props.locationChange()
+  }
+
+  onTaxesChange () {
+    this.props.taxesChange()
   }
 
   reset () {
@@ -41,6 +48,8 @@ class InvoiceForm extends Component {
   }
 
   render () {
+    const { invoice } = this.props
+
     return (
       <div>
         <aside className='sidebar'>
@@ -53,7 +62,7 @@ class InvoiceForm extends Component {
               <FormInput
                 type='number'
                 name='number'
-                value={this.props.invoice.number}
+                value={invoice.number}
                 label='No.'
               />
             </div>
@@ -61,7 +70,7 @@ class InvoiceForm extends Component {
               <FormInput
                 type='text'
                 name='date'
-                value={this.props.invoice.date}
+                value={invoice.date}
                 label='Date'
               />
             </div>
@@ -71,7 +80,7 @@ class InvoiceForm extends Component {
             <FormInput
               type='text'
               name='client'
-              value={this.props.invoice.client}
+              value={invoice.client}
               label='Client'
             />
           </div>
@@ -79,7 +88,7 @@ class InvoiceForm extends Component {
           <FormInput
             type='text'
             name='projectName'
-            value={this.props.invoice.projectName}
+            value={invoice.projectName}
             label='Project'
           />
           <hr />
@@ -89,15 +98,15 @@ class InvoiceForm extends Component {
           <FormInput
             type='number'
             name='paid'
-            value={this.props.invoice.paid}
+            value={invoice.paid}
             label='Paid'
           />
 
-          {this.props.invoice.paid ?
+          {invoice.paid ?
             <FormInput
               type='number'
               name='paymentDue'
-              value={this.props.invoice.paymentDue}
+              value={invoice.paymentDue}
               label='Payment Due'
             /> : null
           }
@@ -110,14 +119,32 @@ class InvoiceForm extends Component {
                 name='location'
                 id='client-location'
                 value='International'
-                checked={this.props.invoice.international ? 'checked' : ''}
+                checked={invoice.international ? 'checked' : ''}
                 onChange={this.onLocationChange}>
               </input>
               <span className='control__indicator control__indicator--checkbox'></span>
               <span className='control__label'>International client</span>
             </label>
           </div>
+
+          <div className='field'>
+            <label className='control' htmlFor='taxes'>
+              <input
+                className='control__input'
+                type='checkbox'
+                name='taxes'
+                id='taxes'
+                value='Taxes'
+                checked={invoice.taxes ? 'checked' : ''}
+                onChange={this.onTaxesChange}>
+              </input>
+              <span className='control__indicator control__indicator--checkbox'></span>
+              <span className='control__label'>Taxes</span>
+            </label>
+          </div>
+
           <button type='button' onClick={this.reset} className='btn btn--primary'>Reset</button>
+
         </aside>
       </div>
     )
@@ -134,6 +161,7 @@ function mapDispatchToProps (dispatch) {
   return bindActionCreators({
     fieldChange: invoiceActions.fieldChange,
     locationChange: invoiceActions.locationChange,
+    taxesChange: invoiceActions.taxesChange,
     uploadInvoice: invoiceActions.uploadInvoice }, dispatch)
 }
 
