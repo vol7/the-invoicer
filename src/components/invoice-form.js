@@ -55,7 +55,7 @@ class InvoiceForm extends Component {
         <aside className='sidebar'>
           <h1 className='sidebar__title'>
             <img className='icon' src={invoicerLogo} />
-            <span>Ze Invoicer</span>
+            <span>The Invoicer</span>
           </h1>
           <div className='grid'>
             <div className='grid__col--4'>

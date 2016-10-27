@@ -34,9 +34,9 @@ export default class InvoicePreviewFooter extends Component {
           <div className='grid'>
             <div className='grid__col--3'>
               <p>
-                <a href='mailto:hello@volume7.io'>{contactInformation.email}</a>
+                GST: {contactInformation.GST}
                 <br />
-                <a href='http://volume7.io'>{contactInformation.website}</a>
+                QST: {contactInformation.QST}
               </p>
             </div>
             <div className='grid__col--3'>

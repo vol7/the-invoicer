@@ -10,7 +10,9 @@ export const contactInformation = {
   institution: '003',
   transit: '07671',
   accountUSD: '4002648',
-  accountCAD: '1009620'
+  accountCAD: '1009620',
+  GST: '84263 1830',
+  QST: '1220456036'
 }
 
 export default class InvoicePreviewHeader extends Component {
