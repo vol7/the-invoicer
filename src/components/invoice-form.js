@@ -47,6 +47,10 @@ class InvoiceForm extends Component {
     }.bind(this))
   }
 
+  print () {
+    window.print()
+  }
+
   render () {
     const { invoice } = this.props
 
@@ -143,7 +147,10 @@ class InvoiceForm extends Component {
             </label>
           </div>
 
-          <button type='button' onClick={this.reset} className='btn btn--primary'>Reset</button>
+          <div className="btn-group">
+            <button type='button' onClick={this.print} className='btn btn--primary'>Save to PDF</button>
+            <button type='button' onClick={this.reset} className='btn btn--ghost'>Reset form</button>
+          </div>
 
         </aside>
       </div>
