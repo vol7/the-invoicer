@@ -42,9 +42,9 @@ export class Money extends Component {
     }
     number = number.reverse().join('')
     if (this.props.international) {
-      number = `${sign}$${number}.${rightPart}`
+      number = `${sign}${number}.${rightPart}$ USD`
     } else {
-      number = `${sign}${number}.${rightPart}$`
+      number = `${sign}${number}.${rightPart}$ CAD`
     }
     return number
   }
