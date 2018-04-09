@@ -21,6 +21,9 @@ export default class InvoicePreviewFooter extends Component {
     return (
       <div>
         <section className='section' style={{minHeight: '220px'}}>
+          {invoice.international &&
+            <p><em>All prices in USD</em></p>
+          }
           <p>Please send payment within 21 days of receiving this invoice.
           We accept payment via wire transfer or cheque.</p>
           <p>If you have any questions, feel free to contact us at <a href={`mailto:${contactInformation.email}`}>
