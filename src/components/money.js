@@ -44,7 +44,7 @@ export class Money extends Component {
     if (this.props.international) {
       number = `${sign}$${number}.${rightPart}`
     } else {
-      number = `${sign}${number}.${rightPart}$`
+      number = `${sign}$${number}.${rightPart}`
     }
     return number
   }
