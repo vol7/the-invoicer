@@ -4,7 +4,7 @@ import logo from '../../images/logo.svg'
 
 export const contactInformation = {
   name: 'Volume7 Inc.',
-  adress: '3 Place Ville Marie #400 Montreal, QC H3B 2E3 Canada',
+  adress: '309-445 Viger Ouest Montreal, QC H2Z 2B8 Canada',
   email: 'hello@volume7.io',
   website: 'volume7.io',
   institution: '003',
