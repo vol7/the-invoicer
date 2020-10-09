@@ -36,10 +36,7 @@ export default class InvoicePreviewFooter extends Component {
           </p>
           <p className="mb-6">
             If you have any questions, feel free to contact us at{" "}
-            <a
-              className="text-accent"
-              href={`mailto:${contactInformation.email}`}
-            >
+            <a href={`mailto:${contactInformation.email}`}>
               {contactInformation.email}
             </a>
           </p>
