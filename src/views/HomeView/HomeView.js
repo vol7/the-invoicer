@@ -1,15 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
-import InvoicePreview from '../../containers/invoice-preview'
-import InvoiceForm from '../../components/invoice-form'
+import InvoicePreview from "../../containers/invoice-preview";
+import InvoiceForm from "../../components/invoice-form";
 
 export default class HomeView extends Component<void, Props, void> {
-  render () {
+  render() {
     return (
-      <div className='container'>
+      <div className="flex">
         <InvoiceForm />
         <InvoicePreview />
       </div>
-    )
+    );
   }
 }
